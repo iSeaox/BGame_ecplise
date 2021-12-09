@@ -8,10 +8,10 @@ import fr.dzeta.bgame.utils.Points;
 
 public class View {
 	
-	private static final double MAX_ANGLE = 45 * Math.PI / 180;
-	private static final double MAX_COEF = 0.4D;
+	public static final double MAX_COEF = 0.5D;
 	
 	private static int[] cursor = {(int)GUIHandler.FRAME_WIDTH / 2, (int)GUIHandler.FRAME_HEIGHT/2};
+	private static int maxCursorDistance = (int) Math.sqrt(cursor[0] * cursor[0] + cursor[1] * cursor[1]);
 	
 	private List<Displayable> content;
 	
@@ -22,22 +22,25 @@ public class View {
 	public void render() {
 		for(Displayable entity : this.content) {
 			int[] origin = this.computeOrigin(entity.getPosition());
-			entity.render(MAX_COEF, this.computeAngle(origin, entity), origin);
+			entity.render(this.computeCoef(origin, entity), this.computeAngle(origin, entity), origin, cursor);
 		}
 	}
 	
 	public void display(Graphics g) {
 		for(Displayable entity : this.content) {
-			entity.display(g);
+			entity.display(g, this.computeOrigin(entity.getPosition()), cursor);
 		}
 	}
 	
+	private double computeCoef(int[] origin, Displayable entity) {
+		final double tempX = cursor[0] - (origin[0] + entity.getWidth());
+		final double tempY = cursor[1] - (origin[1] + entity.getHeight());
+		return (Math.sqrt(tempX * tempX + tempY * tempY) * MAX_COEF) / maxCursorDistance;
+	}
+	
 	private double computeAngle(int[] origin, Displayable entity) {
-		final int tempX = cursor[0] - (origin[0] + entity.getWidth());
-		final int tempY = cursor[1] - (origin[1] + entity.getHeight());
-		System.out.println(tempX + " " + tempY);
-		System.out.println(Math.atan(tempY / tempX));
-		System.out.println(cursor[0]+ " "+ cursor[1]);
+		final double tempX = cursor[0] - (origin[0] + entity.getWidth());
+		final double tempY = cursor[1] - (origin[1] + entity.getHeight()); 
 		return Math.atan(tempY / tempX);
 	}
 	

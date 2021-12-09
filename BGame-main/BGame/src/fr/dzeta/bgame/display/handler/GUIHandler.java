@@ -19,6 +19,9 @@ public class GUIHandler {
 	
 	public static final int FRAME_WIDTH = 854;
 	public static final int FRAME_HEIGHT = 480;
+	/*public static final int FRAME_WIDTH = 1280;
+	public static final int FRAME_HEIGHT = 720;*/
+	
 	
 	private static View view;
 	private static List<Displayable> viewContents;
@@ -36,7 +39,7 @@ public class GUIHandler {
 	
 	public static void refresh() {
 		GUIHandler.timer.setText("Openning: "+Main.info.getOpenning()+"  timer: "
-				+TimeUtils.parseSecond(Main.info.getCount()));
+				+TimeUtils.parseSecond(Main.info.getCount()) + " coef: "+View.MAX_COEF);
 		GUIHandler.frame.repaint();
 	}
 	
@@ -51,6 +54,19 @@ public class GUIHandler {
 		player = new Player();
 		player.setPosition(new Points(100, 100, 0));
 		GUIHandler.viewContents.add(player);
+		
+		Player player2 = new Player();
+		player2.setPosition(new Points(300, 0, 0));
+		GUIHandler.viewContents.add(player2);
+		
+		Player player3 = new Player();
+		player3.setPosition(new Points(0, 0, 0));
+		GUIHandler.viewContents.add(player3);
+		GUIHandler.view = new View(GUIHandler.viewContents);
+		
+		Player player4 = new Player();
+		player4.setPosition(new Points(100, 350, 0));
+		GUIHandler.viewContents.add(player4);
 		GUIHandler.view = new View(GUIHandler.viewContents);
 		
 		timer = new JLabel("Openning: "+Main.info.getOpenning()+"  timer: "

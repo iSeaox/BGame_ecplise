@@ -8,6 +8,8 @@ import fr.dzeta.bgame.utils.Points;
 
 public abstract class Displayable {
 	
+	public static final double RIGHT_ANGLE = 90 * Math.PI / 180;
+	
 	protected List<Polygon> shapes;
 	protected Points position;
 	
@@ -15,8 +17,8 @@ public abstract class Displayable {
 	protected int height;
 	protected int depth;
 	
-	public abstract void display(Graphics g);
-	public abstract void render(final double coef, final double angle, final int[] origin);
+	public abstract void display(Graphics g, final int[] origin, final int[] cursor);
+	public abstract void render(final double coef, final double angle, final int[] origin, final int[] cursor);
 	
 	public List<Polygon> getShapes() {
 		return shapes;

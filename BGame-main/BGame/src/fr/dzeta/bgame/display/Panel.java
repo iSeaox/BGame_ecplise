@@ -24,8 +24,8 @@ public class Panel extends JPanel {
 		g.fillRect(0, 0, GUIHandler.FRAME_WIDTH, GUIHandler.FRAME_HEIGHT);
 		
 		g.setColor(Color.BLACK);
-		g.drawLine(427, 0, 427, 480);
-		g.drawLine(0, 240, 854, 240);
+		g.drawLine(GUIHandler.FRAME_WIDTH / 2, 0, GUIHandler.FRAME_WIDTH / 2, GUIHandler.FRAME_HEIGHT);
+		g.drawLine(0, GUIHandler.FRAME_HEIGHT / 2, GUIHandler.FRAME_WIDTH, GUIHandler.FRAME_HEIGHT / 2);
 		
 		GUIHandler.getView().display(g);
 	}
