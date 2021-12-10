@@ -33,14 +33,14 @@ public class View {
 	}
 	
 	private double computeCoef(int[] origin, Displayable entity) {
-		final double tempX = cursor[0] - (origin[0] + entity.getWidth());
-		final double tempY = cursor[1] - (origin[1] + entity.getHeight());
+		final double tempX = Math.abs(cursor[0] - (origin[0] + entity.getWidth()));
+		final double tempY = Math.abs(cursor[1] - (origin[1] + entity.getHeight()));
 		return (Math.sqrt(tempX * tempX + tempY * tempY) * MAX_COEF) / maxCursorDistance;
 	}
 	
 	private double computeAngle(int[] origin, Displayable entity) {
-		final double tempX = cursor[0] - (origin[0] + entity.getWidth());
-		final double tempY = cursor[1] - (origin[1] + entity.getHeight()); 
+		final double tempX = Math.abs(cursor[0] - (origin[0] + entity.getWidth()));
+		final double tempY = Math.abs(cursor[1] - (origin[1] + entity.getHeight()));
 		return Math.atan(tempY / tempX);
 	}
 	

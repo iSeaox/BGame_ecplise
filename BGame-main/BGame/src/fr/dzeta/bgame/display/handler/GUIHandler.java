@@ -19,8 +19,8 @@ public class GUIHandler {
 	
 	public static final int FRAME_WIDTH = 854;
 	public static final int FRAME_HEIGHT = 480;
-	/*public static final int FRAME_WIDTH = 1280;
-	public static final int FRAME_HEIGHT = 720;*/
+	//public static final int FRAME_WIDTH = 1280;
+	//public static final int FRAME_HEIGHT = 720;
 	
 	
 	private static View view;
@@ -60,13 +60,23 @@ public class GUIHandler {
 		GUIHandler.viewContents.add(player2);
 		
 		Player player3 = new Player();
-		player3.setPosition(new Points(0, 0, 0));
+		player3.setPosition(new Points(700, 0, 0));
 		GUIHandler.viewContents.add(player3);
 		GUIHandler.view = new View(GUIHandler.viewContents);
 		
 		Player player4 = new Player();
 		player4.setPosition(new Points(100, 350, 0));
 		GUIHandler.viewContents.add(player4);
+		GUIHandler.view = new View(GUIHandler.viewContents);
+		
+		Player player5 = new Player();
+		player5.setPosition(new Points(600, 90, 0));
+		GUIHandler.viewContents.add(player5);
+		GUIHandler.view = new View(GUIHandler.viewContents);
+		
+		Player player6 = new Player();
+		player6.setPosition(new Points(600, 300, 0));
+		GUIHandler.viewContents.add(player6);
 		GUIHandler.view = new View(GUIHandler.viewContents);
 		
 		timer = new JLabel("Openning: "+Main.info.getOpenning()+"  timer: "
