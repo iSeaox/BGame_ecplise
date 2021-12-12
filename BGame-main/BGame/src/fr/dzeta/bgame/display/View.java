@@ -1,6 +1,7 @@
 package fr.dzeta.bgame.display;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.dzeta.bgame.display.handler.GUIHandler;
@@ -14,6 +15,10 @@ public class View {
 	private static int maxCursorDistance = (int) Math.sqrt(cursor[0] * cursor[0] + cursor[1] * cursor[1]);
 	
 	private List<Displayable> content;
+	
+	public View() {
+		this.content = new ArrayList<>();
+	}
 	
 	public View(List<Displayable> content) {
 		this.content = content;
@@ -48,4 +53,9 @@ public class View {
 		final int[] pos = {point.getX(), point.getY()};
 		return pos;
 	}
+	
+	public void setContent(List<Displayable> content) {
+		this.content = content;
+	}
+	
 }

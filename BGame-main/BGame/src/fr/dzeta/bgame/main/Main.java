@@ -22,14 +22,14 @@ public class Main {
 	}
 	
 	private static void run() {
-		long base;
-		long elapsed;
+		long base = 0;
+		long elapsed = 0;
 		int tick = 0;
 		
 		while(Main.RUN) {
 			if(tick == 60) {
 				tick = 0;
-				Main.tick();
+				Main.tick(elapsed);
 			}
 			else {
 				tick += 1;
@@ -52,7 +52,7 @@ public class Main {
 		info.flush();
 	}
 	
-	private static void tick() {
+	private static void tick(final long elapsed) {
 		info.increaseCount();
 	}
 
