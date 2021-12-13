@@ -43,10 +43,21 @@ public class View {
 		return (Math.sqrt(tempX * tempX + tempY * tempY) * MAX_COEF) / maxCursorDistance;
 	}
 	
-	private double computeAngle(int[] origin, Displayable entity) {
-		final double tempX = Math.abs(cursor[0] - (origin[0] + entity.getWidth()));
-		final double tempY = Math.abs(cursor[1] - (origin[1] + entity.getHeight()));
-		return Math.atan(tempY / tempX);
+	private double[] computeAngle(int[] origin, Displayable entity) {
+		double[] coefs = new double[3];
+		double tempX = Math.abs(cursor[0] - (origin[0] + entity.getWidth()));
+		double tempY = Math.abs(cursor[1] - origin[1]);
+		coefs[0] = Math.atan(tempY / tempX);
+		
+		tempX = Math.abs(cursor[0] - (origin[0] + entity.getWidth()));
+		tempY = Math.abs(cursor[1] - (origin[1] + entity.getHeight()));
+		coefs[1] = Math.atan(tempY / tempX);
+		
+		tempX = Math.abs(cursor[0] - origin[0]);
+		tempY = Math.abs(cursor[1] - (origin[1] + entity.getHeight()));
+		coefs[2] = Math.atan(tempY / tempX);
+		
+		return coefs;
 	}
 	
 	private int[] computeOrigin(final Points point) {

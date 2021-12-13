@@ -46,12 +46,65 @@ public class Player extends Displayable{
 	}
 	
 	@Override
-	public void render(final double coef, final double angle, final int[] origin, final int[] cursor) {
+	public void render(final double coef, final double angle[], final int[] origin, final int[] cursor) {
 		super.shapes.clear();
 		final int x = origin[0];
 		final int y = origin[1];
 		
-		final int xOffsetF2 = (int)(Math.cos(angle) * (depth * coef));
+		final int[] xF1 = {x, x, x + width, x + width};
+		final int[] yF1 = {y, y + height, y + height, y};
+		super.addShape(new Polygon(xF1, yF1, xF1.length));
+		
+		if(x < cursor[0]) {
+			if(y < cursor[1]) {
+				final int xBeta = (int) (Math.cos(angle[1]) * (depth *coef));
+				final int yBeta = (int) (Math.sin(angle[1]) * (depth *coef));
+				final int[] xF2 = {x + width
+						, x + width + xBeta
+						, x + width + xBeta
+						, x + width};
+				final int[] yF2 = {y + height
+						, y + height + yBeta
+						, y + (int)(xBeta / Math.tan(RIGHT_ANGLE - angle[0]))
+						, y};
+				super.addShape(new Polygon(xF2, yF2, xF2.length));
+				
+				final int[] xF3 = {x
+						, x + (int)(yBeta / Math.tan(angle[2]))
+						, xF2[1]
+						, xF2[0]};
+				final int[] yF3 = {y + height
+						, y + height + yBeta
+						, yF2[1]
+						, yF2[0]};
+				super.addShape(new Polygon(xF3, yF3, xF3.length));
+			}
+			else {
+				final int xBeta = (int) (Math.cos(angle[0]) * (depth *coef));
+				final int yBeta = (int) (Math.sin(angle[0]) * (depth *coef));
+				final int[] xF2 = {x + width
+						, x + width + xBeta
+						, x + width + xBeta
+						, x + width};
+				final int[] yF2 = {y
+						, y - yBeta
+						, y + height - (int)(xBeta / Math.tan(RIGHT_ANGLE - angle[1]))
+						, y + height};
+				super.addShape(new Polygon(xF2, yF2, xF2.length));
+				
+				final int[] xF3 = {x
+						, x + (int)(yBeta / Math.tan(angle[2]))
+						, xF2[1]
+						, xF2[0]};
+				final int[] yF3 = {y
+						, y - yBeta
+						, yF2[1]
+						, yF2[0]};
+				super.addShape(new Polygon(xF3, yF3, xF3.length));
+			}
+		}
+		
+		/*final int xOffsetF2 = (int)(Math.cos(angle) * (depth * coef));
 		final int yOffsetF2 = (int)(Math.sin(angle) * (depth * coef));
 		
 		final int xOffsetF3 = (int)(Math.sin(RIGHT_ANGLE - angle) * (depth * coef));
@@ -145,7 +198,7 @@ public class Player extends Displayable{
 						, y - yOffsetF3};
 				super.addShape(new Polygon(xF3, yF3, xF3.length));
 			}
-		}
+		}*/
 		
 	}
 }
