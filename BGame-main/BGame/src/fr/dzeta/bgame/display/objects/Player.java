@@ -55,14 +55,14 @@ public class Player extends Displayable{
 		final int[] yF1 = {y, y + height, y + height, y};
 		super.addShape(new Polygon(xF1, yF1, xF1.length));
 		
+		final int xBeta = (int) (Math.cos(angle[1]) * (depth *coef));
+		final int yBeta = (int) (Math.sin(angle[1]) * (depth *coef));
 		if(x < cursor[0]) {
+			final int[] xF2 = {x + width
+					, x + width + xBeta
+					, x + width + xBeta
+					, x + width};
 			if(y < cursor[1]) {
-				final int xBeta = (int) (Math.cos(angle[1]) * (depth *coef));
-				final int yBeta = (int) (Math.sin(angle[1]) * (depth *coef));
-				final int[] xF2 = {x + width
-						, x + width + xBeta
-						, x + width + xBeta
-						, x + width};
 				final int[] yF2 = {y + height
 						, y + height + yBeta
 						, y + (int)(xBeta / Math.tan(RIGHT_ANGLE - angle[0]))
@@ -80,15 +80,9 @@ public class Player extends Displayable{
 				super.addShape(new Polygon(xF3, yF3, xF3.length));
 			}
 			else {
-				final int xBeta = (int) (Math.cos(angle[0]) * (depth *coef));
-				final int yBeta = (int) (Math.sin(angle[0]) * (depth *coef));
-				final int[] xF2 = {x + width
-						, x + width + xBeta
-						, x + width + xBeta
-						, x + width};
 				final int[] yF2 = {y
 						, y - yBeta
-						, y + height - (int)(xBeta / Math.tan(RIGHT_ANGLE - angle[1]))
+						, y + height - (int)(xBeta / Math.tan(RIGHT_ANGLE - angle[0]))
 						, y + height};
 				super.addShape(new Polygon(xF2, yF2, xF2.length));
 				
@@ -102,103 +96,48 @@ public class Player extends Displayable{
 						, yF2[0]};
 				super.addShape(new Polygon(xF3, yF3, xF3.length));
 			}
-		}
-		
-		/*final int xOffsetF2 = (int)(Math.cos(angle) * (depth * coef));
-		final int yOffsetF2 = (int)(Math.sin(angle) * (depth * coef));
-		
-		final int xOffsetF3 = (int)(Math.sin(RIGHT_ANGLE - angle) * (depth * coef));
-		final int yOffsetF3 = (int)(Math.cos(RIGHT_ANGLE - angle) * (depth * coef));
-		
-		final int[] xF1 = {x, x, x + width, x + width};
-		final int[] yF1 = {y, y + height, y + height, y};
-		super.addShape(new Polygon(xF1, yF1, xF1.length));
-		
-		if(x < cursor[0]) {
-			final int[] xF2 = {x + width
-					, x + width + xOffsetF2
-					, x + width + xOffsetF2
-					, x + width};
 			
-			if(y < cursor[1]) {
-				
-				final int[] yF2 = {y + height
-						, y + height + yOffsetF2
-						, y + yOffsetF2
-						, y};
-				super.addShape(new Polygon(xF2, yF2, xF2.length));
-				
-				final int[] xF3 = {x
-						, x + width
-						, x + width + xOffsetF3
-						, x + xOffsetF3};
-				final int[] yF3 = {y + height
-						, y + height
-						, y + height + yOffsetF3
-						, y + height + yOffsetF3};
-				super.addShape(new Polygon(xF3, yF3, xF3.length));
-			}
-			else {
-				
-				final int[] yF2 = {y + height
-						, y + height - yOffsetF2
-						, y - yOffsetF2
-						, y};
-				super.addShape(new Polygon(xF2, yF2, xF2.length));
-				
-				final int[] xF3 = {x
-						, x + width
-						, x + width + xOffsetF3
-						, x + xOffsetF3};
-				final int[] yF3 = {y
-						, y
-						, y - yOffsetF3
-						, y - yOffsetF3};
-				super.addShape(new Polygon(xF3, yF3, xF3.length));
-			}
 		}
 		else {
-			
-			final int[] xF2 = {x - xOffsetF2
+			final int[] xF2 = {x
 					, x
-					, x
-					, x - xOffsetF2};
-			
+					, x - xBeta
+					, x - xBeta};
 			if(y < cursor[1]) {
-				final int[] yF2 = {y + height + yOffsetF2
+				final int[] yF2 = {y
 						, y + height
-						, y
-						, y + yOffsetF2};
-				super.addShape(new Polygon(xF2, yF2, xF2.length));
-				
-				final int[] xF3 = {x - xOffsetF3
-						, x + width - xOffsetF3
-						, x + width
-						, x};
-				final int[] yF3 = {y + height + yOffsetF3
-						, y + height + yOffsetF3
-						, y + height
-						, y + height};
-				super.addShape(new Polygon(xF3, yF3, xF3.length));
-			}
-			else {
-				final int[] yF2 = {y + height - yOffsetF2
-						, y + height
-						, y
-						, y - yOffsetF2};
+						, y + height + yBeta
+						, y + (int)(xBeta / Math.tan(RIGHT_ANGLE - angle[0]))};
 				super.addShape(new Polygon(xF2, yF2, xF2.length));
 				
 				final int[] xF3 = {x
-						, x+ width
-						, x + width - xOffsetF3
-						, x - xOffsetF3};
-				final int[] yF3 = {y
-						, y
-						, y - yOffsetF3
-						, y - yOffsetF3};
+						, x + width
+						, x + width - (int)(yBeta / Math.tan(angle[2]))
+						, xF2[2]};
+				final int[] yF3 = {y + height
+						, + y + height
+						, y + height + yBeta
+						, yF2[2]};
 				super.addShape(new Polygon(xF3, yF3, xF3.length));
 			}
-		}*/
+			else {
+				final int[] yF2 = {y
+						, y + height
+						, y + height - (int)(xBeta / Math.tan(RIGHT_ANGLE - angle[0]))
+						, y - yBeta};
+				super.addShape(new Polygon(xF2, yF2, xF2.length));
+				
+				final int[] xF3 = {x
+						, x + width
+						, x + width - (int)(yBeta / Math.tan(angle[2]))
+						, x - xBeta};
+				final int[] yF3 = {y
+						, y
+						, y - yBeta
+						, y - yBeta};
+				super.addShape(new Polygon(xF3, yF3, xF3.length));
+			}
+		}
 		
 	}
 }

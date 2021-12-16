@@ -52,12 +52,24 @@ public class GUIHandler {
 		frame.addKeyListener(new KeyHandler());
 		
 		player = new Player();
-		player.setPosition(new Points(50, 50, 0));
+		player.setPosition(new Points(0, 0, 80));
 		GUIHandler.viewContents.add(player);
 		
 		Player player2 = new Player();
 		player2.setPosition(new Points(50, 300, 0));
 		GUIHandler.viewContents.add(player2);
+		
+		Player player2bis = new Player();
+		player2bis.setPosition(new Points(130, 320, 0));
+		GUIHandler.viewContents.add(player2bis);
+		
+		Player player3 = new Player();
+		player3.setPosition(new Points(700, 50, 0));
+		GUIHandler.viewContents.add(player3);
+		
+		Player player4 = new Player();
+		player4.setPosition(new Points(700, 350, 0));
+		GUIHandler.viewContents.add(player4);
 		
 		GUIHandler.view = new View(GUIHandler.viewContents);
 		

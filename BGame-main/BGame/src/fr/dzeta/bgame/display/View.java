@@ -26,15 +26,29 @@ public class View {
 	
 	public void render() {
 		for(Displayable entity : this.content) {
-			int[] origin = this.computeOrigin(entity.getPosition());
+			int[] origin = this.computeOrigin(entity.getPosition(), entity);
 			entity.render(this.computeCoef(origin, entity), this.computeAngle(origin, entity), origin, cursor);
 		}
 	}
 	
 	public void display(Graphics g) {
 		for(Displayable entity : this.content) {
-			entity.display(g, this.computeOrigin(entity.getPosition()), cursor);
+			entity.display(g, this.computeOrigin(entity.getPosition(), entity), cursor);
 		}
+	}
+	
+	private int[] computeOrigin(final Points point, Displayable entity) {
+		if(point.getZ() != 0) {
+			final int[] pointC = {point.getX() + entity.getWidth(), point.getY() + entity.getHeight()};
+			final double alpha = Math.atan(Math.abs(cursor[1] - pointC[0] / cursor[0] - pointC[1]));
+			final int[] pointHomotC = {pointC[0] + (int)(Math.cos(alpha) * this.computeCoef(pointC) * point.getZ())
+					, pointC[1] + (int)(Math.sin(alpha) * this.computeCoef(pointC) * point.getZ())};
+		}
+		int x = point.getX();
+		int y = point.getY();
+		final int[] pos = {x, y};
+		return pos;
+		
 	}
 	
 	private double computeCoef(int[] origin, Displayable entity) {
@@ -43,26 +57,84 @@ public class View {
 		return (Math.sqrt(tempX * tempX + tempY * tempY) * MAX_COEF) / maxCursorDistance;
 	}
 	
+	private double computeCoef(int[] point) {
+		final double tempX = Math.abs(cursor[0] - point[0]);
+		final double tempY = Math.abs(cursor[1] - point[1]);
+		return (Math.sqrt(tempX * tempX + tempY * tempY) * MAX_COEF) / maxCursorDistance;
+	}
+	
 	private double[] computeAngle(int[] origin, Displayable entity) {
+		final int height = entity.getHeight();
+		final int width = entity.getWidth();
 		double[] coefs = new double[3];
-		double tempX = Math.abs(cursor[0] - (origin[0] + entity.getWidth()));
-		double tempY = Math.abs(cursor[1] - origin[1]);
+		
+		int[] alphaVertex = new int[2];
+		int[] betaVertex = new int[2];
+		int[] gammaVertex = new int[2];
+		
+		if(origin[0] < cursor[0]) {
+			if(origin[1] < cursor[1]) {
+				alphaVertex[0] = origin[0] + width;
+				alphaVertex[1] = origin[1];
+				
+				betaVertex[0] = origin[0] + width;
+				betaVertex[1] = origin[1] + height;
+				
+				gammaVertex[0] = origin[0];
+				gammaVertex[1] = origin[1] + height;
+			}
+			else {
+				alphaVertex[0] = origin[0] + width;
+				alphaVertex[1] = origin[1] + height;
+				
+				betaVertex[0] = origin[0] + width;
+				betaVertex[1] = origin[1];
+				
+				gammaVertex[0] = origin[0];
+				gammaVertex[1] = origin[1];
+			}
+		}
+		else {
+			if(origin[1] < cursor[1]) {
+				alphaVertex[0] = origin[0];
+				alphaVertex[1] = origin[1];
+				
+				betaVertex[0] = origin[0];
+				betaVertex[1] = origin[1] + height;
+				
+				gammaVertex[0] = origin[0] + width;
+				gammaVertex[1] = origin[1] + height;
+			}
+			else {
+				alphaVertex[0] = origin[0];
+				alphaVertex[1] = origin[1] + height;
+				
+				betaVertex[0] = origin[0];
+				betaVertex[1] = origin[1];
+				
+				gammaVertex[0] = origin[0] + width;
+				gammaVertex[1] = origin[1];
+			}
+		}
+		
+		double tempX;
+		double tempY;
+		/* COMPUTING ALPHA*/
+		tempX = Math.abs(cursor[0] - alphaVertex[0]);
+		tempY = Math.abs(cursor[1] - alphaVertex[1]);
 		coefs[0] = Math.atan(tempY / tempX);
 		
-		tempX = Math.abs(cursor[0] - (origin[0] + entity.getWidth()));
-		tempY = Math.abs(cursor[1] - (origin[1] + entity.getHeight()));
+		/* COMPUTING BETA*/
+		tempX = Math.abs(cursor[0] - betaVertex[0]);
+		tempY = Math.abs(cursor[1] - betaVertex[1]);
 		coefs[1] = Math.atan(tempY / tempX);
 		
-		tempX = Math.abs(cursor[0] - origin[0]);
-		tempY = Math.abs(cursor[1] - (origin[1] + entity.getHeight()));
+		/* COMPUTING GAMMA*/
+		tempX = Math.abs(cursor[0] - gammaVertex[0]);
+		tempY = Math.abs(cursor[1] - gammaVertex[1]);
 		coefs[2] = Math.atan(tempY / tempX);
 		
 		return coefs;
-	}
-	
-	private int[] computeOrigin(final Points point) {
-		final int[] pos = {point.getX(), point.getY()};
-		return pos;
 	}
 	
 	public void setContent(List<Displayable> content) {
