@@ -13,6 +13,10 @@ public abstract class Displayable {
 	protected List<Polygon> shapes;
 	protected Points position;
 	
+	protected int displayWidth;
+	protected int displayHeight;
+	protected int displayDepth;
+	
 	protected int width;
 	protected int height;
 	protected int depth;
@@ -52,5 +56,23 @@ public abstract class Displayable {
 	}
 	public void setDepth(int depth) {
 		this.depth = depth;
+	}
+	public int getDisplayWidth() {
+		return displayWidth;
+	}
+	public void setDisplayWidth(int displayWidth) {
+		this.displayWidth = displayWidth;
+	}
+	public int getDisplayHeight() {
+		return displayHeight;
+	}
+	public void setDisplayHeight(int displayHeight) {
+		this.displayHeight = displayHeight;
+	}
+	public int getDisplayDepth() {
+		return displayDepth;
+	}
+	public void setDisplayDepth(int displayDepth) {
+		this.displayDepth = displayDepth;
 	}
 }

@@ -14,6 +14,8 @@ public class Player extends Displayable{
 		super.width = 80;
 		super.height = 80;
 		super.depth = 80;
+		super.displayWidth = super.width;
+		super.displayHeight = super.height;
 	}
 	
 	@Override
@@ -50,6 +52,9 @@ public class Player extends Displayable{
 		super.shapes.clear();
 		final int x = origin[0];
 		final int y = origin[1];
+		final int width = super.displayWidth;
+		final int height = super.displayHeight;
+		final int depth = super.displayDepth;
 		
 		final int[] xF1 = {x, x, x + width, x + width};
 		final int[] yF1 = {y, y + height, y + height, y};

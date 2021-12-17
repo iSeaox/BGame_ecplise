@@ -51,9 +51,18 @@ public class GUIHandler {
 		frame.setContentPane(GUIHandler.panel);
 		frame.addKeyListener(new KeyHandler());
 		
+		int tmp = 13 * 80;
+		
 		player = new Player();
-		player.setPosition(new Points(0, 0, 80));
+		player.setPosition(new Points(50, 50, 0));
+		player.setDepth(tmp);
 		GUIHandler.viewContents.add(player);
+		
+		for(int i = 12 * 80 ; i >= 0 ; i -= 80) {
+			Player player = new Player();
+			player.setPosition(new Points(50, 50, i));
+			GUIHandler.viewContents.add(player);
+		}
 		
 		Player player2 = new Player();
 		player2.setPosition(new Points(50, 300, 0));

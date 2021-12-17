@@ -40,13 +40,24 @@ public class View {
 	private int[] computeOrigin(final Points point, Displayable entity) {
 		if(point.getZ() != 0) {
 			final int[] pointC = {point.getX() + entity.getWidth(), point.getY() + entity.getHeight()};
-			final double alpha = Math.atan(Math.abs(cursor[1] - pointC[0] / cursor[0] - pointC[1]));
-			final int[] pointHomotC = {pointC[0] + (int)(Math.cos(alpha) * this.computeCoef(pointC) * point.getZ())
-					, pointC[1] + (int)(Math.sin(alpha) * this.computeCoef(pointC) * point.getZ())};
+			final int[] temp = {point.getX(), point.getY()};
+			final double beta = this.computeAngle(temp, entity)[1];
+			final int[] pointHomotC = {pointC[0] + (int)(Math.cos(beta) * this.computeCoef(pointC) * point.getZ())
+					, pointC[1] + (int)(Math.sin(beta) * this.computeCoef(pointC) * point.getZ())};
+			final double homotCoef = this.distance(pointHomotC, cursor) / this.distance(pointC, cursor);
+			final int homotWidth = (int) (entity.getWidth() * homotCoef); 
+			final int homotHeight = (int) (entity.getHeight() * homotCoef);
+			final int homotDepth = (int)(entity.getDepth() * homotCoef);
+			entity.setDisplayWidth(homotWidth);
+			entity.setDisplayHeight(homotHeight);
+			entity.setDisplayDepth(homotDepth);
+			final int[] pos = {pointHomotC[0] - homotWidth, pointHomotC[1] - homotHeight};
+			return pos;
 		}
-		int x = point.getX();
-		int y = point.getY();
-		final int[] pos = {x, y};
+		entity.setDisplayWidth(entity.getWidth());
+		entity.setDisplayHeight(entity.getHeight());
+		entity.setDisplayDepth(entity.getDepth());
+		final int[] pos = {point.getX(), point.getY()};
 		return pos;
 		
 	}
@@ -55,6 +66,10 @@ public class View {
 		final double tempX = Math.abs(cursor[0] - (origin[0] + entity.getWidth()));
 		final double tempY = Math.abs(cursor[1] - (origin[1] + entity.getHeight()));
 		return (Math.sqrt(tempX * tempX + tempY * tempY) * MAX_COEF) / maxCursorDistance;
+	}
+	
+	private double distance(int[] point1, int[] point2) {
+		return Math.sqrt((point2[0] - point1[0])*(point2[0] - point1[0]) - (point2[1] - point1[1])*(point2[1] - point1[1]));
 	}
 	
 	private double computeCoef(int[] point) {
